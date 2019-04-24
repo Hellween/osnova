@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include<string.h>
+int prov(char mass[], int m);
+
+ int main(void)
+{
+	int word, pos;
+	char i, F, c;
+	char s[50];
+	memset(s, '\0', 50);
+	F = word = 0;
+	for (i = 0; (c = s[i] = getchar()) != EOF; i++)
+	{
+		if (c == ' ' || c == '.' || c == ',' || c == '\t' || c == '\n')
+		{
+			F = 0;
+			if (prov(s, i) == 0)
+			{
+				if (s[pos] == s[pos + 1])
+				{
+					puts(s);
+					word++;
+				}
+			}
+			i = (-1);
+			memset(s, '\0', 50);
+		}
+		else
+		{
+			if (F == 0)
+			{
+				F = 1;
+				pos = i;
+			}
+		}
+		if (c == '\n')
+			break;
+	}
+	printf("%d", word);
+	getchar();
+	getchar();
+	return 0;
+}
+int prov(char s[], int m)
+{
+	int F, i;
+	F = 0;
+	for (i = 0; i < m; i++)
+	{
+		if ((s[i]<'A' || s[i]>'Z') && (s[i]<'a' || s[i]>'z'))
+		{
+			F = 1;
+		}
+	}
+	return F;
+}
