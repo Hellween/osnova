@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define N 10
+
+int main(void)
+{
+	int array[N];	
+	int maxNum = 0;	
+	int maxPos = 0;	
+	int minNum = 0;	 
+	int minPos = 0;	
+	int i = 0;
+	srand(time(NULL));	
+
+	for (i = 0; i < N; i++)
+	{
+		array[i] = -100 + rand() % 200;	
+		printf("%4d ", array[i]);
+	}
+
+	maxNum = array[0];	
+	minNum = array[0];	
+
+	for (i = 0; i < N; i++)	
+	{
+		if (maxNum < array[i])	
+		{
+			maxNum = array[i];
+			maxPos = i;	
+		}
+		else if (minNum > array[i])	 
+		{
+			minNum = array[i];
+			minPos = i;	
+		}
+	}
+
+	printf("\nmaxNum = %d, minNum = %d\n", maxNum, minNum);	
+
+	for (i = 0; i < N; i++)	
+	{
+		if ((i > maxPos && i < minPos) || (i > minPos && i < maxPos))	
+			array[i] = 0;
+		printf("%4d ", array[i]);
+	}
+	printf("\n");
+	system("pause");
+	return 0;
+}
