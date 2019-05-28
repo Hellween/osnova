@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#define N 5
+#define K 5
+
+int main(void)
+{
+	int array[N][K], i = 0, j = 0, a = 0;
+
+	printf("enter %d numbers in each line separated by a space\n", K);
+	for (i = 0; i < N; i++)
+	{
+		printf("%2d row: ", i);
+		for (j = 0; j < K; j++)
+		{
+			scanf_s("%d", &array[i][j]);
+		}
+	}
+	printf("\n");
+
+	for (i = 0; i < N; i++)
+	{
+		a = array[i][1] - array[i][0];
+
+		for (j = 0; j < K - 1; j++)
+		{
+			if (array[i][j + 1] != array[i][j] + a)
+			{
+				printf("%2d row is NOT an arithmetic progression\n", i);
+				j = 0;
+				break;
+			}
+		}
+
+		if (j == K - 1)
+			printf("%2d row is an arithmetic progression\n", i);
+	}
+
+	system("pause");
+	return 0;
+}
