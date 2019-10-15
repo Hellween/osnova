@@ -1,0 +1,59 @@
+#pragma warning(disable:4996)	// отключаем ошибку, выдаваемую при использовании функции fopen()
+#include <stdio.h>
+
+#define NO 0
+#define YES 1
+#define MAXLEN 300	// максимальная длина строки
+
+int main(void)
+{
+	FILE *in_fd, *out_fd;
+	int spacef = NO, flag = NO;
+	char string[MAXLEN], *in_ptr, *out_ptr, c;
+	
+	// если при открытии потоков произошла ошибка
+	if ((in_fd = fopen("F1.txt", "r")) == NULL || (out_fd = fopen("F2.txt", "w")) == NULL)
+	{
+		printf("fopen error\n");	// выводим сообщение об ошибке
+		getchar();
+		return 0;	// выходим из программы
+	}
+
+	// пока не дойдем до конца файла
+	while (feof(in_fd) == NULL)
+	{
+		fgets(string, MAXLEN - 1, in_fd);	// получаем строку из файла
+		in_ptr = string;	// указатель на текущую позицию проверяемой строки
+		out_ptr = string;	// указатель на текущую позицию итоговой строки
+
+		// пока не дойдем до конца строки
+		do {
+			c = *in_ptr;
+
+			// если найден пробел
+			if (c == ' ')
+			{
+				// если это превый пробел
+				if (spacef == NO)
+				{
+					*out_ptr++ = c;	// переносим в итоговую строку текущий символ
+					spacef = YES;	// поднимаем флаг пробела
+				}
+			}
+			// если пробел не найден
+			else
+			{	
+				*out_ptr++ = c;		// переносим в итоговую строку текущий символ
+				spacef = NO;		// опускаем флаг пробела
+			}
+			in_ptr++;	// переходим к следующему символу проверяемой строки
+
+		} while (c != '\0');
+
+		fputs(string, out_fd);		// выводим строку в файл
+	}
+	fclose(in_fd);	// закрываем входной поток
+	fclose(out_fd);	// закрываем выходной поток
+	printf("program completed successfully\n");	// выводим сообщение об удачном завершении программы
+	getchar();
+	return 0;
